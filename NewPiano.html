@@ -1,1 +1,73 @@
 
+<!DOCTYPE html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script type="text/javascript" charset="utf-8">
+ var composition=[];
+
+   function playNote(note){
+     let sound= new Audio();
+     sound.src="piano-mp3-"+note+".mp3";
+     composition.push(note);
+     showArray();
+     sound.play();
+   }
+   
+   function showArray()
+   {
+     document.getElementById("label"). innerHTML= composition;
+   }
+   
+   function removeLast()
+   {
+     composition.pop();
+     showArray();
+   }
+   
+   function delay(milliseconds){
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
+   
+   async function playAll()
+   {
+     let arrLen=composition.length;
+     let ctr;
+     
+     for(ctr=0;arrLen>ctr;ctr++)
+     {
+     let sounD= new Audio();
+     sounD.src="piano-mp3-"+composition[ctr]+".mp3";
+     sounD.play();
+     console.log(ctr, arrLen);
+     document.getElementById("seek").innerHTML=composition[ctr];
+     await delay(999);
+     }
+     document.getElementById("seek").innerHTML="";
+   }
+ </script>
+</head>
+<body>
+  <p id="label">
+
+  </p>
+  <h1 id="seek"></H1>
+  <button onclick="playNote('c1')">
+    C1</button>
+ <button onclick="playNote('db1')">
+    Db1</button>
+ <button onclick="playNote('d1')">
+    D1</button>
+ <button onclick="playNote('eb1')">
+    Eb1</button>
+ <button onclick="playNote('e1')">
+    E1</button>
+ <button onclick="playNote('f1')">
+    F1</button>
+ <button onclick="playNote('g1')">
+    G1</button>
+    <br>
+  <button onclick="playAll()">Play</button>
+  <button onclick="removeLast()">Delete last</button>
+</body>
